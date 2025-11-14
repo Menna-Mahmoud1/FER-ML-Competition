@@ -15,4 +15,4 @@ jobs:
         with:
           name: private-labels
           path: private/test_labels.csv
-          retention-days: 400
+          retention-days: 90
