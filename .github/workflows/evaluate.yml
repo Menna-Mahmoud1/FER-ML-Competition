@@ -3,23 +3,36 @@ name: Evaluate Submission
 on:
   pull_request:
     paths:
-      - 'submission/*.csv'
+      - 'submission/*.csv'  # fixed folder name
 
 jobs:
   evaluate:
     runs-on: ubuntu-latest
     
     steps:
+      # 1️⃣ Checkout the public repo
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # 2️⃣ Checkout the private repo with test labels
+      - name: Checkout private repo
+        uses: actions/checkout@v3
+        with:
+          repository: Tasneem-Selim-Researcher/FER-ML-Competition-Private
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          path: private_data
+
+      # 3️⃣ Setup Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.10'
 
+      # 4️⃣ Install dependencies
       - name: Install dependencies
-        run: pip install pandas scikit-learn
+        run: pip install pandas scikit-learn numpy
 
+      # 5️⃣ Run evaluation
       - name: Run evaluation
-        run: python evaluate.py
+        run: |
+          python evaluate.py submission/submission.csv private_data/evaluation/test_labels.csv
