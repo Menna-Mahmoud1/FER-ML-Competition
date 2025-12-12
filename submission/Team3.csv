@@ -1,4 +1,4 @@
-image_id,emotion
+id,predicted_label
 0,4
 1,4
 2,6
@@ -3588,3 +3588,4 @@ image_id,emotion
 3586,6
 3587,4
 3588,4
+
